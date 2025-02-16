@@ -1,8 +1,8 @@
 :root {
     --task-completed-color: #00000030;
-    --app-background-color:#262626;
-    --task-background-color:#eaeaea; 
-    --task-outline: 1px solid black: 
+    --app-background-color: #262626;
+    --task-background-color: #eaeaea; 
+    --task-outline: 1px solid black; 
 }
 
 * {
@@ -16,7 +16,7 @@ body {
 }
 
 .todo-app {
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Verdana, sans-serif;
     color: #ffffff;
     height: 100vh;
     margin: 0 auto;
@@ -34,8 +34,15 @@ body {
     text-align: center;
 }
 
-.todo-app__input {
-    height: 30px;
+.todo-app__form {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.todo-app__task-input {
+    height: 40px;
     background: #2e2e2e;
     color: #ffffff;
     padding: 0 20px;
@@ -45,14 +52,7 @@ body {
     position: relative;
 }
 
-.todo-app__form {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-}
-
-.todo-app__add-task {
+.todo-app__add-task-button {
     background-color: #e060552a;
     color: #e06155;
     outline: none;
@@ -65,50 +65,27 @@ body {
     transition: .2s ease-in-out;
 }
 
-/* .todo-app__add-due-date {
-    background: none !important;
-} */
-
-.todo-app__add-task:hover {
+.todo-app__add-task-button:hover {
     color: #ffffff;
     background-color: #e060553f;
 }
 
 /* List styles */
 
-.todo-list {
+.todo-app__list {
     list-style: none;
 }
 
-.todo-list__item {
+.todo-app__item {
     display: flex;
     align-items: center;
     gap: 10px;
-    padding: 8px 0;
+    padding: 18px 0;
     width: 400px;
     border-bottom: 1px solid #3d3d3d;
 }
 
-/* .todo-list__text {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-} */
-
-/* .todo-list__due-date {
-    color: #e06155;
-    display: flex;
-    align-items: center;
-    margin-top: 5px;
-    gap: 5px;
-} */
-
-/* .todo-list__due-date img {
-    width: 18px;
-} */
-
-.todo-list__checkbox {
+.todo-app__checkbox {
     outline: none !important;
     border: none !important;
     background-color: #ffffff18;
@@ -120,24 +97,24 @@ body {
     transition: .1s ease-in-out;
 }
 
-.todo-list__checkbox:active {
+.todo-app__checkbox:active {
     background-color: #ffffff24;
 }
 
-.checkbox__icon {
+.todo-app__checkbox-icon {
     opacity: 0;
     transition: .1s ease-in-out;
 }
 
-.checkbox__icon:hover {
+.todo-app__checkbox-icon:hover {
     opacity: 0.2;
 }
 
-.checkbox__icon--checked {
+.todo-app__checkbox-icon--checked {
     opacity: 1;
 }
 
-.todo-list__delete {
+.todo-app__delete {
     outline: none !important;
     border: none !important;
     margin-left: auto;
