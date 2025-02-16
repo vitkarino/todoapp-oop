@@ -9,23 +9,23 @@
 <body>
     <div class="todo-app">
         <header class="todo-app__header">
-            <h1 class="todo-app__title">To-Do App <span class="todo-app__author">By Viktor Kysil</span> </h1>
-            <input type="text" class="todo-app__input" placeholder="Write your task">
-            <button class="todo-app__button todo-app__button--add">+</button>
+            <h2 class="todo-app__title">To-Do App</h2>
+            <form class="todo-app__form">
+                <input type="text" class="todo-app__input" placeholder="Add task">
+                <button type="submit" class="todo-app__add-task" onclick="addTask()">+</button>
+            </form>
+                
         </header>
-        <main class="todo-app__main">
-            <ul class="todo-app__list">
-                <li class="todo-app__item">
-                    <span class="todo-app__item-title">Example</span>
-                    <p class="todo-app__item-deadline">Due: 15/02/2025</p>
-                    <button class="todo-app__button todo-app__button--delete">x</button>
-                </li>
-                <li class="todo-app__item todo-app__item--completed">
-                    <span class="todo-app__item-text">Completed</span>
-                    <button class="todo-app__button todo-app__button--delete">x</button>
-                </li>
-            </ul>
+        <main id="todo-app__main">
+            <div class="todo-list">
+                <div class="todo-list__item">
+                    <button class="todo-list__checkbox"><img class="checkbox__icon" src="src/material-symbols--done-rounded (1).svg" alt=""></button>
+                    <span class="todo-list__text">Work on a project </span>
+                    <button class="todo-list__delete"><img src="src/material-symbols--delete (1).svg" alt=""></button>
+                </div>
+            </div>
         </main>
     </div>
+    <script src="js/script.js"></script>
 </body>
 </html>
