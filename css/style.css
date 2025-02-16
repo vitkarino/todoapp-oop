@@ -1,0 +1,52 @@
+:root {
+    --task-completed-color: #00000030;
+    --app-background-color:#f2f2f2;
+    --task-background-color:#eaeaea; 
+    --task-outline: 1px solid black: 
+    --font-family: 'Arial', sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: var(--app-background-color);
+}
+
+.todo-app {
+    font-family: var(--font-family);
+    height: 100vh;
+    margin: 0 auto;
+}
+
+.todo-app__main {
+    margin: 0 auto;
+    width: fit-content;
+}
+
+.todo-app__header {
+    width: fit-content;
+    margin: 2rem auto;
+}
+
+.todo-app__title {
+    font-size: 32px;
+}
+
+.todo-app__author {
+    font-size: 16px;
+}
+
+.todo-app__item {
+    background-color: var(--task-background-color);
+    outline: var(--task-outline);
+    display: flex;
+}
+
+.todo-app__item--completed {
+    color: var(--task-completed-color);
+    text-decoration: line-through;
+}
