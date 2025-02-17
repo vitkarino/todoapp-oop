@@ -3,6 +3,16 @@
     --app-background-color: #262626;
     --task-background-color: #eaeaea; 
     --task-outline: 1px solid black; 
+    --button-bg-color: #e060552a;
+    --button-hover-bg-color: #e060553f;
+    --button-active-bg-color: #e0605577;
+    --button-color: #e06155;
+    --button-hover-color: #ffffff;
+    --input-bg-color: #2e2e2e;
+    --input-color: #ffffff;
+    --checkbox-bg-color: #ffffff18;
+    --checkbox-hover-bg-color: #ffffff34;
+    --checkbox-active-bg-color: #ffffff38;
 }
 
 * {
@@ -43,8 +53,9 @@ body {
 
 .todo-app__task-input {
     height: 40px;
-    background: #2e2e2e;
-    color: #ffffff;
+    font-size: 18px;
+    background: var(--input-bg-color);
+    color: var(--input-color);
     padding: 0 20px;
     border: none !important;
     border-radius: 50px;
@@ -53,30 +64,35 @@ body {
 }
 
 .todo-app__add-task-button {
-    background-color: #e060552a;
-    color: #e06155;
-    outline: none;
-    border: none;
+    background-color: var(--button-bg-color);
+    color: var(--button-color);
+    outline: none !important;
+    border: none !important;
     border-radius: 50px;
-    width: 32px;
-    height: 32px;
-    font-size: 16px;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
     cursor: pointer;
     transition: .2s ease-in-out;
 }
 
 .todo-app__add-task-button:hover {
-    color: #ffffff;
-    background-color: #e060553f;
+    color: var(--button-hover-bg-color);
+    background-color: var(--button-active-bg-color);
 }
 
-/* List styles */
+.todo-app__add-task-button:active {
+    color: var(--button-hover-color);
+    background-color: var(--button-hover-bg-color);
+}
+
+/* Main styles */
 
 .todo-app__list {
-    list-style: none;
+    list-style: none !important;
 }
 
-.todo-app__item {
+.todo-app__task {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -85,10 +101,10 @@ body {
     border-bottom: 1px solid #3d3d3d;
 }
 
-.todo-app__checkbox {
+.todo-app__button--checkbox {
     outline: none !important;
     border: none !important;
-    background-color: #ffffff18;
+    background-color: var(--checkbox-bg-color);
     border-radius: 20px;
     width: 28px;
     height: 28px;
@@ -97,24 +113,15 @@ body {
     transition: .1s ease-in-out;
 }
 
-.todo-app__checkbox:active {
-    background-color: #ffffff24;
+.todo-app__button--checkbox:hover {
+    background-color: var(--checkbox-hover-bg-color);
 }
 
-.todo-app__checkbox-icon {
-    opacity: 0;
-    transition: .1s ease-in-out;
+.todo-app__button--checkbox:active {
+    background-color: var(--checkbox-active-bg-color);
 }
 
-.todo-app__checkbox-icon:hover {
-    opacity: 0.2;
-}
-
-.todo-app__checkbox-icon--checked {
-    opacity: 1;
-}
-
-.todo-app__delete {
+.todo-app__button--delete {
     outline: none !important;
     border: none !important;
     margin-left: auto;
@@ -123,4 +130,8 @@ body {
     height: 24px;
     cursor: pointer;
     transition: .2s ease-in-out;
+}
+
+.todo-app__button--delete:hover {
+    background-color: var(--button-hover-bg-color);
 }
