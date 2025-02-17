@@ -1,15 +1,14 @@
 class TodoApp {
   constructor() {
     this.$ = (selector) => document.querySelector(selector);
-    this.$$ = (selector) => document.querySelectorAll(selector);
 
     this.tasks = LocalStorage.get("tasks") || [];
-    this.taskList = this.$(".todo-app__list");
-    this.taskTemplate = this.$("#todo-app__task-template");
+    this.taskList = this.$(".todo-app__task-list");
+    this.taskTemplate = this.$("#task-template");
 
     this.$(".todo-app__form").addEventListener("submit", (event) => {
       event.preventDefault();
-      const taskInput = this.$(".todo-app__task-input");
+      const taskInput = this.$(".todo-app__input");
       const taskText = taskInput.value.trim();
       if (taskText) {
         this.addTask(taskText);
@@ -21,11 +20,6 @@ class TodoApp {
   }
 
   addTask(taskText) {
-    if (!taskText) {
-      alert("Task cannot be empty!");
-      return;
-    }
-
     const newTask = new Task(taskText);
     this.tasks.push(newTask);
     LocalStorage.set("tasks", this.tasks);
@@ -54,19 +48,24 @@ class TodoApp {
 
     this.tasks.forEach((task) => {
       const taskItem = document.importNode(this.taskTemplate.content, true);
-      taskItem.querySelector(".todo-app__text").textContent = task.taskText;
-
+      const taskElement = taskItem.querySelector(".todo-app__task");
+      const taskText = taskItem.querySelector(".todo-app__text");
       const deleteButton = taskItem.querySelector(".todo-app__button--delete");
+      const completeButton = taskItem.querySelector(
+        ".todo-app__button--checkbox"
+      );
+
+      taskText.textContent = task.taskText;
+      taskElement.dataset.id = task.id;
+      taskElement.dataset.completed = task.completed;
+
       deleteButton.dataset.id = task.id;
       deleteButton.addEventListener("click", () => this.removeTask(task.id));
 
-      const completeButton = taskItem.querySelector(".todo-app__button--checkbox");
       completeButton.dataset.id = task.id;
-      completeButton.addEventListener("click", () => this.toggleTaskCompletion(task.id));
-
-      if (task.completed) {
-        taskItem.querySelector(".todo-app__text").classList.add("completed");
-      }
+      completeButton.addEventListener("click", () =>
+        this.toggleTaskCompletion(task.id)
+      );
 
       this.taskList.appendChild(taskItem);
     });
@@ -75,7 +74,7 @@ class TodoApp {
 
 class Task {
   constructor(taskText) {
-    this.id = Math.random().toString(16).slice(2);
+    this.id = crypto.randomUUID();
     this.taskText = taskText;
     this.completed = false;
   }
@@ -87,8 +86,11 @@ class LocalStorage {
   }
 
   static get(key) {
-    const data = localStorage.getItem(key);
-    return data ? JSON.parse(data) : null;
+    try {
+      return JSON.parse(localStorage.getItem(key));
+    } catch (error) {
+      return [];
+    }
   }
 }
 

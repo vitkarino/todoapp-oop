@@ -1,14 +1,13 @@
 :root {
-    --task-completed-color: #00000030;
+    --task-completed-color: #ffffff30;
     --app-background-color: #262626;
-    --task-background-color: #eaeaea; 
-    --task-outline: 1px solid black; 
     --button-bg-color: #e060552a;
     --button-hover-bg-color: #e060553f;
     --button-active-bg-color: #e0605577;
     --button-color: #e06155;
     --button-hover-color: #ffffff;
     --input-bg-color: #2e2e2e;
+    --input-active-bg-color: #ffffff1e;
     --input-color: #ffffff;
     --checkbox-bg-color: #ffffff18;
     --checkbox-hover-bg-color: #ffffff34;
@@ -33,6 +32,20 @@ body {
     width: fit-content;
 }
 
+.todo-app__button {
+    outline: none;
+    border: none;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+    border-radius: 50px;
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Header styles */
 
 .todo-app__header {
@@ -51,33 +64,30 @@ body {
     gap: 5px;
 }
 
-.todo-app__task-input {
+.todo-app__input {
     height: 40px;
     font-size: 18px;
     background: var(--input-bg-color);
     color: var(--input-color);
     padding: 0 20px;
-    border: none !important;
+    border: none;
     border-radius: 50px;
-    outline: none !important;
+    outline: none;
     position: relative;
+}
+
+.todo-app__input:focus {
+    background-color: var(--input-active-bg-color);
 }
 
 .todo-app__add-task-button {
     background-color: var(--button-bg-color);
     color: var(--button-color);
-    outline: none !important;
-    border: none !important;
-    border-radius: 50px;
-    width: 40px;
-    height: 40px;
-    font-size: 24px;
-    cursor: pointer;
-    transition: .2s ease-in-out;
 }
 
-.todo-app__add-task-button:hover {
-    color: var(--button-hover-bg-color);
+.todo-app__add-task-button:hover,
+.todo-app__add-task-button:focus {
+    color: var(--input-color);
     background-color: var(--button-active-bg-color);
 }
 
@@ -88,8 +98,8 @@ body {
 
 /* Main styles */
 
-.todo-app__list {
-    list-style: none !important;
+.todo-app__task-list {
+    list-style: none;
 }
 
 .todo-app__task {
@@ -98,22 +108,33 @@ body {
     gap: 10px;
     padding: 18px 0;
     width: 400px;
+    font-size: 18px;
     border-bottom: 1px solid #3d3d3d;
 }
 
 .todo-app__button--checkbox {
-    outline: none !important;
-    border: none !important;
     background-color: var(--checkbox-bg-color);
-    border-radius: 20px;
-    width: 28px;
-    height: 28px;
-    display: flex;
-    cursor: pointer;
-    transition: .1s ease-in-out;
 }
 
-.todo-app__button--checkbox:hover {
+.todo-app__button--checkbox .todo-app__icon {
+    display: none;
+}
+
+.todo-app__task[data-completed="true"] .todo-app__button--checkbox .todo-app__icon {
+    display: block;
+}
+
+.todo-app__task[data-completed="true"] .todo-app__text {
+    text-decoration: line-through;
+    color: var(--task-completed-color);
+}
+
+.todo-app__icon {
+    width: 28px;
+}
+
+.todo-app__button--checkbox:hover,
+.todo-app__button--checkbox:focus {
     background-color: var(--checkbox-hover-bg-color);
 }
 
@@ -122,16 +143,17 @@ body {
 }
 
 .todo-app__button--delete {
-    outline: none !important;
-    border: none !important;
     margin-left: auto;
-    background: none !important;
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    transition: .2s ease-in-out;
+    background: none;
+    width: 40px;
+    height: 40px;
 }
 
-.todo-app__button--delete:hover {
+.todo-app__button--delete:hover,
+.todo-app__button--delete:focus {
     background-color: var(--button-hover-bg-color);
+}
+
+.todo-app__button--delete:active {
+    background-color: var(--button-active-bg-color);
 }
