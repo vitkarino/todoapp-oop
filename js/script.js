@@ -54,33 +54,34 @@ class TodoApp {
     const taskText = taskItem.querySelector(".task__text");
     const deleteButton = taskItem.querySelector(".button--delete");
     const completeButton = taskItem.querySelector(".button--checkbox");
-  
+
     taskText.textContent = oTask.taskText;
     taskElement.dataset.id = oTask.id;
     taskElement.dataset.completed = oTask.completed;
-  
+
     deleteButton.dataset.id = oTask.id;
     deleteButton.addEventListener("click", () => this.removeTask(oTask.id));
-  
+
     completeButton.dataset.id = oTask.id;
-    completeButton.addEventListener("click", () => this.toggleTaskCompletion(oTask.id));
-  
+    completeButton.addEventListener("click", () =>
+      this.toggleTaskCompletion(oTask.id)
+    );
+
     this.taskList.appendChild(taskItem);
   }
 
   renderTasks() {
     while (this.taskList.firstChild) {
-      // Цей цикл видаляє всі дочірні елементи taskList 
+      // Цей цикл видаляє всі дочірні елементи taskList
       this.taskList.removeChild(this.taskList.firstChild);
       // Видаляє перший дочірній елемент на кожній ітерації
 
-      // Альтернативний метод - this.taskList.innerHTML = ""; Проте є менш безпечним через можливість XSS атак та загалом не рекомендується використовувати його де є взаємодія DOM та БД. 
-      // Також можна обрати цикл for, у разі потрібності контролю індексів, проте в нашому випадку це не обовʼязково. 
+      // Альтернативний метод - this.taskList.innerHTML = ""; Проте є менш безпечним через можливість XSS атак та загалом не рекомендується використовувати його де є взаємодія DOM та БД.
+      // Також можна обрати цикл for, у разі потрібності контролю індексів, проте в нашому випадку це не обовʼязково.
     }
 
     this.tasks.forEach((task) => this.renderTask(task));
   }
-  
 }
 
 class Task {

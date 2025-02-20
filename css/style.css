@@ -24,7 +24,7 @@ body {
     background-color: var(--app-background-color);
 }
 
-.app {
+.todo-app {
     font-family: Verdana, sans-serif;
     color: #ffffff;
     height: 100vh;
@@ -46,7 +46,70 @@ body {
     align-items: center;
 }
 
-/* Header styles */
+.button__icon {
+    width: 28px;
+}
+
+/* Submit button styles */
+
+.button--submit {
+    background-color: var(--button-bg-color);
+    color: var(--button-color);
+}
+
+.button--submit:hover,
+.button--submit:focus {
+    color: var(--input-color);
+    background-color: var(--button-active-bg-color);
+}
+
+.button--submit:active {
+    color: var(--button-hover-color);
+    background-color: var(--button-hover-bg-color);
+}
+
+/* Delete button styles */
+
+.button--delete {
+    margin-left: auto;
+    background: none;
+    width: 40px;
+    height: 40px;
+}
+
+.button--delete:hover,
+.button--delete:focus {
+    background-color: var(--button-hover-bg-color);
+}
+
+.button--delete:active {
+    background-color: var(--button-active-bg-color);
+}
+
+/* Checkbox button styles */
+
+.button--checkbox {
+    background-color: var(--checkbox-bg-color);
+}
+
+.button--checkbox .button__icon {
+    display: none;
+}
+
+.button--checkbox:hover,
+.button--checkbox:focus {
+    background-color: var(--checkbox-hover-bg-color);
+}
+
+.button--checkbox:active {
+    background-color: var(--checkbox-active-bg-color);
+}
+
+.task[data-completed="true"] .button--checkbox .button__icon {
+    display: block;
+}
+
+/* Header styles */ 
 
 .app__header {
     padding: 30px 0;
@@ -80,22 +143,6 @@ body {
     background-color: var(--input-active-bg-color);
 }
 
-.button--submit {
-    background-color: var(--button-bg-color);
-    color: var(--button-color);
-}
-
-.button--submit:hover,
-.button--submit:focus {
-    color: var(--input-color);
-    background-color: var(--button-active-bg-color);
-}
-
-.button--submit:active {
-    color: var(--button-hover-color);
-    background-color: var(--button-hover-bg-color);
-}
-
 /* Main styles */
 
 .task-list {
@@ -112,48 +159,10 @@ body {
     border-bottom: 1px solid #3d3d3d;
 }
 
-.button--checkbox {
-    background-color: var(--checkbox-bg-color);
-}
-
-.button--checkbox .button__icon {
-    display: none;
-}
-
-.task[data-completed="true"] .button--checkbox .button__icon {
-    display: block;
-}
-
 .task[data-completed="true"] .task__text {
     text-decoration: line-through;
     color: var(--task-completed-color);
 }
 
-.button__icon {
-    width: 28px;
-}
 
-.button--checkbox:hover,
-.button--checkbox:focus {
-    background-color: var(--checkbox-hover-bg-color);
-}
 
-.button--checkbox:active {
-    background-color: var(--checkbox-active-bg-color);
-}
-
-.button--delete {
-    margin-left: auto;
-    background: none;
-    width: 40px;
-    height: 40px;
-}
-
-.button--delete:hover,
-.button--delete:focus {
-    background-color: var(--button-hover-bg-color);
-}
-
-.button--delete:active {
-    background-color: var(--button-active-bg-color);
-}
