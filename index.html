@@ -7,21 +7,21 @@
     <title>QuickTodo</title>
 </head>
 <body>
-    <div class="todo-app">
-        <header class="todo-app__header">
-            <h1 class="todo-app__title">To-Do App</h1>
-            <form class="todo-app__form">
-                <input type="text" class="todo-app__input" placeholder="Add task">
-                <button type="submit" class="todo-app__button todo-app__add-task-button">+</button>
+    <div class="app" id="todoapp1">
+        <header class="app__header">
+            <h1 class="header__title">To-Do App</h1>
+            <form class="header__form">
+                <input type="text" class="form__input" placeholder="Add task">
+                <button type="submit" class="button button--submit">+</button>
             </form>
         </header>
-        <main class="todo-app__main">
-            <div class="todo-app__task-list">
+        <main class="app__main">
+            <div class="main__task-list">
                 <template id="task-template">
-                    <div class="todo-app__task">
-                        <button class="todo-app__button todo-app__button--checkbox"><img class="todo-app__icon" src="src/icon--checkmark.svg" alt="Complete task"></button>
-                        <span class="todo-app__text">Work on a project</span>
-                        <button class="todo-app__button todo-app__button--delete"><img src="src/icon--delete.svg" class="todo-app__icon" alt="Delete task"></button>
+                    <div class="task">
+                        <button class="button button--checkbox"><img class="button__icon" src="src/icon--checkmark.svg" alt="Complete task"></button>
+                        <span class="task__text">Work on a project</span>
+                        <button class="button button--delete"><img src="src/icon--bin.svg" class="button__icon" alt="Delete task"></button>
                     </div>
                 </template>
             </div>

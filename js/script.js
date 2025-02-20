@@ -1,35 +1,40 @@
+$ = (selector) => document.querySelector(selector);
+
 class TodoApp {
-  constructor() {
-    this.$ = (selector) => document.querySelector(selector);
-
+  constructor(sSelector) {
+    this.UI = $(sSelector);
+    this.find = (selector) => this.UI.querySelector(selector);
     this.tasks = LocalStorage.get("tasks") || [];
-    this.taskList = this.$(".todo-app__task-list");
-    this.taskTemplate = this.$("#task-template");
+    this.taskList = this.find(".main__task-list");
+    this.taskTemplate = this.find("#task-template");
 
-    this.$(".todo-app__form").addEventListener("submit", (event) => {
+    this.find(".header__form").addEventListener("submit", (event) => {
       event.preventDefault();
-      const taskInput = this.$(".todo-app__input");
-      const taskText = taskInput.value.trim();
-      if (taskText) {
-        this.addTask(taskText);
-        taskInput.value = "";
+      const eTaskInput = this.find(".form__input");
+      const sTaskText = eTaskInput.value.trim();
+      if (sTaskText) {
+        this.addTask(sTaskText);
+        eTaskInput.value = "";
       }
     });
 
-    this.render();
+    this.renderTasks();
   }
 
   addTask(taskText) {
     const newTask = new Task(taskText);
     this.tasks.push(newTask);
     LocalStorage.set("tasks", this.tasks);
-    this.render();
+
+    this.renderTask(newTask);
   }
 
   removeTask(taskId) {
     this.tasks = this.tasks.filter((task) => task.id !== taskId);
     LocalStorage.set("tasks", this.tasks);
-    this.render();
+
+    const taskElement = this.taskList.querySelector(`[data-id="${taskId}"]`);
+    if (taskElement) taskElement.remove();
   }
 
   toggleTaskCompletion(taskId) {
@@ -37,44 +42,52 @@ class TodoApp {
     if (task) {
       task.completed = !task.completed;
       LocalStorage.set("tasks", this.tasks);
-      this.render();
     }
+
+    const taskElement = this.taskList.querySelector(`[data-id="${taskId}"]`);
+    if (taskElement) taskElement.dataset.completed = task.completed;
   }
 
-  render() {
+  renderTask(oTask) {
+    const taskItem = document.importNode(this.taskTemplate.content, true);
+    const taskElement = taskItem.querySelector(".task");
+    const taskText = taskItem.querySelector(".task__text");
+    const deleteButton = taskItem.querySelector(".button--delete");
+    const completeButton = taskItem.querySelector(".button--checkbox");
+  
+    taskText.textContent = oTask.taskText;
+    taskElement.dataset.id = oTask.id;
+    taskElement.dataset.completed = oTask.completed;
+  
+    deleteButton.dataset.id = oTask.id;
+    deleteButton.addEventListener("click", () => this.removeTask(oTask.id));
+  
+    completeButton.dataset.id = oTask.id;
+    completeButton.addEventListener("click", () => this.toggleTaskCompletion(oTask.id));
+  
+    this.taskList.appendChild(taskItem);
+  }
+
+  renderTasks() {
     while (this.taskList.firstChild) {
+      // Цей цикл видаляє всі дочірні елементи taskList 
       this.taskList.removeChild(this.taskList.firstChild);
+      // Видаляє перший дочірній елемент на кожній ітерації
+
+      // Альтернативний метод - this.taskList.innerHTML = ""; Проте є менш безпечним через можливість XSS атак та загалом не рекомендується використовувати його де є взаємодія DOM та БД. 
+      // Також можна обрати цикл for, у разі потрібності контролю індексів, проте в нашому випадку це не обовʼязково. 
     }
 
-    this.tasks.forEach((task) => {
-      const taskItem = document.importNode(this.taskTemplate.content, true);
-      const taskElement = taskItem.querySelector(".todo-app__task");
-      const taskText = taskItem.querySelector(".todo-app__text");
-      const deleteButton = taskItem.querySelector(".todo-app__button--delete");
-      const completeButton = taskItem.querySelector(
-        ".todo-app__button--checkbox"
-      );
-
-      taskText.textContent = task.taskText;
-      taskElement.dataset.id = task.id;
-      taskElement.dataset.completed = task.completed;
-
-      deleteButton.dataset.id = task.id;
-      deleteButton.addEventListener("click", () => this.removeTask(task.id));
-
-      completeButton.dataset.id = task.id;
-      completeButton.addEventListener("click", () =>
-        this.toggleTaskCompletion(task.id)
-      );
-
-      this.taskList.appendChild(taskItem);
-    });
+    this.tasks.forEach((task) => this.renderTask(task));
   }
+  
 }
 
 class Task {
   constructor(taskText) {
     this.id = crypto.randomUUID();
+    // Я вирішив використати саме цей метод, оскільки немає БД, з якого можна було б витягнути унікальний ідентифікатор.
+
     this.taskText = taskText;
     this.completed = false;
   }
@@ -87,11 +100,12 @@ class LocalStorage {
 
   static get(key) {
     try {
-      return JSON.parse(localStorage.getItem(key));
+      const item = localStorage.getItem(key);
+      return item ? JSON.parse(item) : null;
     } catch (error) {
-      return [];
+      throw new Error(`Error getting item from localStorage: ${error}`);
     }
   }
 }
 
-const todo = new TodoApp();
+const todo = new TodoApp("#todoapp1");
