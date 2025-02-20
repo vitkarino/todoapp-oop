@@ -18,6 +18,17 @@ class TodoApp {
       }
     });
 
+    this.taskList.addEventListener("click", (event) => {
+      const deleteButton = event.target.closest(".button--delete");
+      const checkboxButton = event.target.closest(".button--checkbox");
+    
+      if (deleteButton) {
+        this.removeTask(deleteButton.closest('.task').dataset.id);
+      } else if (checkboxButton) {
+        this.toggleTaskCompletion(checkboxButton.closest('.task').dataset.id);
+      }
+    });
+
     this.renderTasks();
   }
 
@@ -33,7 +44,7 @@ class TodoApp {
     this.tasks = this.tasks.filter((task) => task.id !== taskId);
     LocalStorage.set("tasks", this.tasks);
 
-    const taskElement = this.taskList.querySelector(`[data-id="${taskId}"]`);
+    const taskElement = this.taskList.querySelector(`.task[data-id="${taskId}"]`);
     if (taskElement) taskElement.remove();
   }
 
@@ -44,7 +55,7 @@ class TodoApp {
       LocalStorage.set("tasks", this.tasks);
     }
 
-    const taskElement = this.taskList.querySelector(`[data-id="${taskId}"]`);
+    const taskElement = this.taskList.querySelector(`.task[data-id="${taskId}"]`);
     if (taskElement) taskElement.dataset.completed = task.completed;
   }
 
@@ -52,20 +63,10 @@ class TodoApp {
     const taskItem = document.importNode(this.taskTemplate.content, true);
     const taskElement = taskItem.querySelector(".task");
     const taskText = taskItem.querySelector(".task__text");
-    const deleteButton = taskItem.querySelector(".button--delete");
-    const completeButton = taskItem.querySelector(".button--checkbox");
 
     taskText.textContent = oTask.taskText;
     taskElement.dataset.id = oTask.id;
     taskElement.dataset.completed = oTask.completed;
-
-    deleteButton.dataset.id = oTask.id;
-    deleteButton.addEventListener("click", () => this.removeTask(oTask.id));
-
-    completeButton.dataset.id = oTask.id;
-    completeButton.addEventListener("click", () =>
-      this.toggleTaskCompletion(oTask.id)
-    );
 
     this.taskList.appendChild(taskItem);
   }
