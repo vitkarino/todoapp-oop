@@ -3,26 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="src/icon--task.svg" type="image/x-icon">
+    <link rel="icon" href="src/icon_task.svg" type="image/x-icon">
     <link rel="stylesheet" href="css/style.css">
     <title>To-Do OOP</title>
 </head>
 <body>
-    <div class="todo-app" id="todoapp1">
-        <header class="app__header">
+    <div class="app" id="todoapp1">
+        <header class="header app__header">
             <h1 class="header__title">To-Do App</h1>
-            <form class="header__form">
+            <form class="form header__form">
                 <input type="text" class="form__input" placeholder="Add a task">
-                <button type="submit" class="button button--submit">+</button>
+                <button type="submit" class="button button_submit">+</button>
             </form>
         </header>
-        <main class="app__main">
-            <div class="main__task-list">
+        <main class="main app__main">
+            <div class="task-list app__task-list">
                 <template id="task-template">
                     <div class="task">
-                        <button class="button button--checkbox"><img class="button__icon" src="src/icon--checkmark.svg" alt="Complete task"></button>
+                        <button class="button button_checkbox"><img class="button__icon" src="src/icon_checkmark.svg" alt="Complete task"></button>
                         <span class="task__text"></span>
-                        <button class="button button--delete"><img src="src/icon--bin.svg" class="button__icon" alt="Delete task"></button>
+                        <button class="button button_delete"><img src="src/icon_bin.svg" class="button__icon" alt="Delete task"></button>
                     </div>
                 </template>
             </div>

@@ -14,17 +14,14 @@
     --checkbox-active-bg-color: #ffffff38;
 }
 
-* {
+body {
+    background-color: var(--app-background-color);
     box-sizing: border-box;
     padding: 0;
     margin: 0;
 }
 
-body {
-    background-color: var(--app-background-color);
-}
-
-.todo-app {
+.app {
     font-family: Verdana, sans-serif;
     color: #ffffff;
     height: 100vh;
@@ -52,60 +49,60 @@ body {
 
 /* Submit button styles */
 
-.button--submit {
+.button_submit {
     background-color: var(--button-bg-color);
     color: var(--button-color);
 }
 
-.button--submit:hover,
-.button--submit:focus {
+.button_submit:hover,
+.button_submit:focus {
     color: var(--input-color);
     background-color: var(--button-active-bg-color);
 }
 
-.button--submit:active {
+.button_submit:active {
     color: var(--button-hover-color);
     background-color: var(--button-hover-bg-color);
 }
 
 /* Delete button styles */
 
-.button--delete {
+.button_delete {
     margin-left: auto;
     background: none;
     width: 40px;
     height: 40px;
 }
 
-.button--delete:hover,
-.button--delete:focus {
+.button_delete:hover,
+.button_delete:focus {
     background-color: var(--button-hover-bg-color);
 }
 
-.button--delete:active {
+.button_delete:active {
     background-color: var(--button-active-bg-color);
 }
 
 /* Checkbox button styles */
 
-.button--checkbox {
+.button_checkbox {
     background-color: var(--checkbox-bg-color);
 }
 
-.button--checkbox .button__icon {
+.button_checkbox .button__icon {
     display: none;
 }
 
-.button--checkbox:hover,
-.button--checkbox:focus {
+.button_checkbox:hover,
+.button_checkbox:focus {
     background-color: var(--checkbox-hover-bg-color);
 }
 
-.button--checkbox:active {
+.button_checkbox:active {
     background-color: var(--checkbox-active-bg-color);
 }
 
-.task[data-completed="true"] .button--checkbox .button__icon {
+.task[data-completed="true"] .button_checkbox .button__icon {
     display: block;
 }
 
@@ -145,7 +142,7 @@ body {
 
 /* Main styles */
 
-.task-list {
+.app__task-list {
     list-style: none;
 }
 

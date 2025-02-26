@@ -5,8 +5,10 @@ class TodoApp {
     this.UI = $(sSelector);
     this.find = (selector) => this.UI.querySelector(selector);
     this.tasks = LocalStorage.get("tasks") || [];
-    this.taskList = this.find(".main__task-list");
+    this.taskList = this.find(".app__task-list");
     this.taskTemplate = this.find("#task-template");
+
+    this.taskList.addEventListener("click", (event) => this.handleClick(event));
 
     this.find(".header__form").addEventListener("submit", (event) => {
       event.preventDefault();
@@ -18,18 +20,20 @@ class TodoApp {
       }
     });
 
-    this.taskList.addEventListener("click", (event) => {
-      const deleteButton = event.target.closest(".button--delete");
-      const checkboxButton = event.target.closest(".button--checkbox");
-    
-      if (deleteButton) {
-        this.removeTask(deleteButton.closest('.task').dataset.id);
-      } else if (checkboxButton) {
-        this.toggleTaskCompletion(checkboxButton.closest('.task').dataset.id);
-      }
-    });
-
     this.renderTasks();
+  }
+
+  handleClick(event) {
+    const taskElement = event.target.closest(".task");
+    if (!taskElement) return;
+
+    const taskId = taskElement.dataset.id;
+
+    if (event.target.closest(".button_delete")) {
+      this.removeTask(taskId);
+    } else if (event.target.closest(".button_checkbox")) {
+      this.toggleTaskCompletion(taskId);
+    }
   }
 
   addTask(taskText) {
@@ -41,21 +45,25 @@ class TodoApp {
   }
 
   removeTask(taskId) {
-    this.tasks = this.tasks.filter((task) => task.id !== taskId);
+    this.tasks = this.tasks.filter((task) => task.id !== parseInt(taskId, 10));
     LocalStorage.set("tasks", this.tasks);
 
-    const taskElement = this.taskList.querySelector(`.task[data-id="${taskId}"]`);
+    const taskElement = this.taskList.querySelector(
+      `.task[data-id="${taskId}"]`
+    );
     if (taskElement) taskElement.remove();
   }
 
   toggleTaskCompletion(taskId) {
-    const task = this.tasks.find((task) => task.id === taskId);
+    const task = this.tasks.find((task) => task.id === parseInt(taskId, 10));
     if (task) {
       task.completed = !task.completed;
       LocalStorage.set("tasks", this.tasks);
     }
 
-    const taskElement = this.taskList.querySelector(`.task[data-id="${taskId}"]`);
+    const taskElement = this.taskList.querySelector(
+      `.task[data-id="${taskId}"]`
+    );
     if (taskElement) taskElement.dataset.completed = task.completed;
   }
 
@@ -73,12 +81,16 @@ class TodoApp {
 
   renderTasks() {
     while (this.taskList.firstChild) {
-      // Цей цикл видаляє всі дочірні елементи taskList
-      // Також можна обрати цикл for, у разі потрібності контролю індексів, проте в нашому випадку це не обовʼязково.
+      // Контроль індексів можна і через while зробити, але використання for буде більш читаємим.
 
+      // Також іншою критерією вибору є те, що ми не знаємо скільки саме треба видалити елементів.
+      
+      // Альтернативами є цикли for (в нашому випадку не підходить, бо не відома кількість елем ентів), for...of (не підходить, бо можуть бути проблеми з пропусками елементів), for...in (не підходить, так як він використовується для роботи з обʼєктами а не масивами), forEach (аналогічно з for...of)
+      
       this.taskList.removeChild(this.taskList.firstChild);
-      // Видаляє перший дочірній елемент на кожній ітерації
-      // Альтернативний метод - this.taskList.innerHTML = ""; Проте є менш безпечним через можливість XSS атак та загалом не рекомендується використовувати його де є взаємодія DOM та БД.
+      // Альтернативний метод - this.taskList.innerHTML = ""; Проте є менш безпечним через можливість XSS атак та загалом не рекомендується використовувати його де є взаємодія DOM та БД. Також альтернативні методи: textContent = "" (не варіант, бо видаляє тільки текст, хоча дочірні елементи залишаться), innerText = "" (аналогічно, видаляє тільки текст, але не дочірні елементи), replaceChildren() (доволі ефективний метод, але не підтримується в деяких браузерах);
+      
+      // Якщо не враховувати безпеку та XSS атаки, то також слід уважно обирати такі методи, щоб вони максимально підтримувалися усіма можливими браузерами а також мали максимальну швидкість.
     }
 
     this.tasks.forEach((task) => this.renderTask(task));
@@ -86,10 +98,9 @@ class TodoApp {
 }
 
 class Task {
+  static idCounter = 0;
   constructor(taskText) {
-    this.id = crypto.randomUUID();
-    // Я вирішив використати саме цей метод, оскільки немає БД, з якого можна було б витягнути унікальний ідентифікатор.
-
+    this.id = ++Task.idCounter;
     this.taskText = taskText;
     this.completed = false;
   }
