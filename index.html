@@ -9,19 +9,23 @@
 </head>
 <body>
     <div class="app" id="todoapp1">
-        <header class="header app__header">
-            <h1 class="header__title">To-Do App</h1>
-            <form class="form header__form">
-                <input type="text" class="form__input" placeholder="Add a task">
-                <button type="submit" class="button button_submit">+</button>
-            </form>
-        </header>
+        <div class="app__header">
+            <header class="header">
+                <h1 class="header__title">To-Do App</h1>
+                <form class="form header__form">
+                    <input type="text" class="form__input" placeholder="Add a task">
+                    <button type="submit" class="button button_submit">+</button>
+                </form>
+            </header>
+        </div>
         <main class="main app__main">
             <div class="task-list app__task-list">
                 <template id="task-template">
                     <div class="task">
-                        <button class="button button_checkbox"><img class="button__icon" src="src/icon_checkmark.svg" alt="Complete task"></button>
-                        <span class="task__text"></span>
+                        <div class="c-checkbox">  
+                            <input type="checkbox" class="c-checkbox__chk">
+                            <span class="c-checkbox__text task__text"></span>
+                        </div>
                         <button class="button button_delete"><img src="src/icon_bin.svg" class="button__icon" alt="Delete task"></button>
                     </div>
                 </template>
